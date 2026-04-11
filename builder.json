@@ -6,7 +6,6 @@
     "repo": "coffeebreak"
   },
   "ios": {
-    "path": ".",
     "configuration": "Release"
   },
   "flutter": {

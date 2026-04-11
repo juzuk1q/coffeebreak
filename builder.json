@@ -5,7 +5,10 @@
     "owner": "juzuk1q",
     "repo": "coffeebreak"
   },
-  "ios": {},
+  "ios": {
+    "path": ".",
+    "configuration": "Release"
+  },
   "flutter": {
     "version": "3.41.3",
     "watch": {}

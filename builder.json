@@ -1,0 +1,15 @@
+{
+  "project": "coffeebreak",
+  "platform": "ios",
+  "github": {
+    "owner": "juzuk1q",
+    "repo": "coffeebreak"
+  },
+  "ios": {},
+  "flutter": {
+    "version": "3.41.3",
+    "watch": {}
+  },
+  "reactNative": {},
+  "mobai": {}
+}

@@ -1,4 +1,5 @@
 import 'package:CoffeeBreak/core/widgets/quantity_selector.dart';
+import 'package:CoffeeBreak/domain/models/cart_item.dart';
 import 'package:CoffeeBreak/core/constant/text_styles.dart';
 import 'package:CoffeeBreak/core/constant/app_colors.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -118,7 +119,7 @@ class AdditiveCard extends StatelessWidget {
 
 // карточка кофе, находится в корзине
 class ShoppingCard extends StatelessWidget {
-  final Map item;
+  final CartItem item; // todo: почему виджет зависит от модели?
   final Function(int) onQuantityChanged;
   final VoidCallback delete;
 
@@ -131,19 +132,6 @@ class ShoppingCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final product = item['product'] as Map? ?? {};
-    final List prices = product['product_prices'] as List? ?? [];
-    final selectedSize = item['size_name'];
-
-    final priceEntry = prices.firstWhere(
-          (p) => p['size_name'] == selectedSize,
-      orElse: () => {'price': 0},
-    );
-
-    final double basePrice = double.tryParse(priceEntry['price'].toString()) ?? 0;
-    final int quantity = item['quantity'] ?? 1;
-    final int totalPrice = (basePrice * quantity).toInt();
-
     return Padding(
       padding: .symmetric(vertical: 7),
       child: Slidable(
@@ -167,7 +155,7 @@ class ShoppingCard extends StatelessWidget {
               ClipRRect(
                 borderRadius: .circular(10),
                 child: Image.network(
-                  product['image_path'] ?? '',
+                  item.product.imagePath,
                   width: 70,
                   height: 70,
                   fit: .cover,
@@ -181,9 +169,9 @@ class ShoppingCard extends StatelessWidget {
                   crossAxisAlignment: .start,
                   mainAxisAlignment: .spaceBetween,
                   children: [
-                    Text(product['name'] ?? 'Кофе', style: TxtStyle.m14(color: AppColor.text)),
+                    Text(item.product.name, style: TxtStyle.m14(color: AppColor.text)),
                     Text(
-                      "${item['syrup'] ?? 'Без сиропа'}, ${item['size_name'] ?? ''}",
+                      '${item.syrup}, ${item.sizeName}',
                       style: TextStyle(fontSize: 10, color: Colors.grey),
                       maxLines: 1,
                       overflow: .ellipsis,
@@ -192,10 +180,10 @@ class ShoppingCard extends StatelessWidget {
                       mainAxisAlignment: .spaceBetween,
                       children: [
                         QuantitySelector(
-                          count: quantity,
+                          count: item.quantity,
                           onChanged: onQuantityChanged,
                         ),
-                        Text("$totalPrice ₽", style: TxtStyle.m18),
+                        Text('${item.totalPrice} ₽', style: TxtStyle.m18),
                       ],
                     ),
                   ],

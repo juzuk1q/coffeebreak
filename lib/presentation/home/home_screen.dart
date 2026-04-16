@@ -43,7 +43,7 @@ class _HomeScreenState extends State<HomeScreen> {
             future: _productsFuture,
             builder: (context, snapshot) {
               if (!snapshot.hasData) {
-                return const Center(child: CircularProgressIndicator());
+                return Center(child: CircularProgressIndicator());
               }
 
               final products = snapshot.data!;

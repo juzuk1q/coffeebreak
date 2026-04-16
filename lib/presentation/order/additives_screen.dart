@@ -35,7 +35,7 @@ class _AdditivesScreenState extends State<AdditivesScreen> {
         _selected.add(id);
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
+          SnackBar(
             content: Text('Можно выбрать не более 3-х добавок'),
             duration: Duration(seconds: 1),
           ),
@@ -54,34 +54,34 @@ class _AdditivesScreenState extends State<AdditivesScreen> {
         height: 70,
         child: FloatingActionButton(
           backgroundColor: AppColor.main,
-          shape: const CircleBorder(),
+          shape: CircleBorder(),
           onPressed: () => Navigator.pop(context, _selected),
-          child: const Icon(Icons.check, color: AppColor.white, size: 40),
+          child: Icon(Icons.check, color: AppColor.white, size: 40),
         ),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(20),
+        padding: .all(20),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: .start,
           children: [
             Text('Выберите добавку', style: TxtStyle.m14()),
-            const SizedBox(height: 20),
+            SizedBox(height: 20),
             Expanded(
               child: FutureBuilder<List<Additive>>(
                 future: _additivesFuture,
                 builder: (context, snapshot) {
                   if (!snapshot.hasData) {
-                    return const Center(child: CircularProgressIndicator());
+                    return Center(child: CircularProgressIndicator());
                   }
 
                   final items = snapshot.data!;
 
                   if (items.isEmpty) {
-                    return const Center(child: Text('Нет доступных добавок'));
+                    return Center(child: Text('Нет доступных добавок'));
                   }
 
                   return GridView.builder(
-                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2,
                       mainAxisSpacing: 15,
                       crossAxisSpacing: 15,

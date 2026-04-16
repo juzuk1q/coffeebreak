@@ -99,7 +99,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final height = MediaQuery.of(context).size.height;
+    final h = MediaQuery.of(context).size.height;
 
     return Scaffold(
       backgroundColor: AppColor.white,
@@ -110,9 +110,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
           child: Column(
             crossAxisAlignment: .start,
             children: [
-              SizedBox(height: height * 0.1),
+              SizedBox(height: h * 0.1),
               Text('Ваш кофе\nначинается здесь', style: TxtStyle.reg30),
-              SizedBox(height: height * 0.03),
+              SizedBox(height: h * 0.03),
 
               // Имя
               TextFormField(
@@ -184,7 +184,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ),
                 ],
               ),
-              SizedBox(height: height * 0.01),
+              SizedBox(height: h * 0.01),
             ],
           ),
         ),

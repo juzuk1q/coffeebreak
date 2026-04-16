@@ -88,19 +88,19 @@ class _OrderScreenState extends State<OrderScreen> {
   Future<void> _showSyrupPicker() async {
     final result = await showModalBottomSheet<String>(
       context: context,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      shape: RoundedRectangleBorder(
+        borderRadius: .vertical(top: .circular(20)),
       ),
       builder: (context) => SafeArea(
         child: Column(
-          mainAxisSize: MainAxisSize.min,
+          mainAxisSize: .min,
           children: [
-            const SizedBox(height: 16),
-            const Text(
+            SizedBox(height: 16),
+            Text(
               'Какой вкус сиропа вы предпочитаете?',
               style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
             ),
-            const SizedBox(height: 16),
+            SizedBox(height: 16),
             ..._syrupOptions.map((option) {
               final isSelected = option == _selectedSyrup;
               return ListTile(
@@ -116,12 +116,12 @@ class _OrderScreenState extends State<OrderScreen> {
                 onTap: () => Navigator.pop(context, option),
               );
             }),
-            const Divider(),
+            Divider(),
             TextButton(
               onPressed: () => Navigator.pop(context),
-              child: const Text('Отмена', style: TextStyle(color: Colors.red)),
+              child: Text('Отмена', style: TextStyle(color: Colors.red)),
             ),
-            const SizedBox(height: 8),
+            SizedBox(height: 8),
           ],
         ),
       ),
@@ -134,7 +134,7 @@ class _OrderScreenState extends State<OrderScreen> {
   Widget build(BuildContext context) {
     // если цен нет вообще — показываем загрузку
     if (widget.product.prices.isEmpty) {
-      return const Scaffold(body: Center(child: CircularProgressIndicator()));
+      return Scaffold(body: Center(child: CircularProgressIndicator()));
     }
 
     return Scaffold(
@@ -151,7 +151,7 @@ class _OrderScreenState extends State<OrderScreen> {
         ],
       ),
       body: Padding(
-        padding: const EdgeInsets.all(20),
+        padding: .all(20),
         child: Column(
           children: [
             Container(
@@ -159,28 +159,28 @@ class _OrderScreenState extends State<OrderScreen> {
               height: 148,
               decoration: BoxDecoration(
                 color: AppColor.card,
-                borderRadius: BorderRadius.circular(15),
+                borderRadius: .circular(15),
               ),
               child: Center(child: Image.network(widget.product.imagePath)),
             ),
-            const SizedBox(height: 15),
+            SizedBox(height: 15),
             Text(widget.product.name, style: TxtStyle.m18),
-            const SizedBox(height: 15),
+            SizedBox(height: 15),
             Text(widget.product.description, textAlign: TextAlign.center),
-            const SizedBox(height: 40),
+            SizedBox(height: 40),
 
             AppSlider(
               size: _sizeNames,
               onTap: (index) => setState(() => _selectedIndex = index),
             ),
-            const SizedBox(height: 15),
-            const Divider(),
+            SizedBox(height: 15),
+            Divider(),
 
             AppButton2(
               txt: 'Сироп: $_selectedSyrup',
               onTap: _showSyrupPicker,
             ),
-            const Divider(),
+            Divider(),
 
             AppButton2(
               txt: 'Добавки',
@@ -196,8 +196,8 @@ class _OrderScreenState extends State<OrderScreen> {
                 if (result != null) setState(() => _selectedAdditivesIds = result);
               },
             ),
-            const Divider(),
-            const Spacer(),
+            Divider(),
+            Spacer(),
 
             Row(
               children: [
@@ -205,7 +205,7 @@ class _OrderScreenState extends State<OrderScreen> {
                   count: _quantity,
                   onChanged: (count) => setState(() => _quantity = count),
                 ),
-                const SizedBox(width: 25),
+                SizedBox(width: 25),
                 Expanded(
                   child: AppButton(
                     text: widget.isEditing ? 'Сохранить' : 'Добавить',

@@ -57,7 +57,7 @@ class _CartScreenState extends State<CartScreen> {
         future: _cartFuture,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
+            return Center(child: CircularProgressIndicator());
           }
           if (snapshot.hasError) {
             return Center(child: Text('Ошибка: ${snapshot.error}'));
@@ -65,7 +65,7 @@ class _CartScreenState extends State<CartScreen> {
 
           final items = snapshot.data ?? [];
           if (items.isEmpty) {
-            return const Center(child: Text('Корзина пуста'));
+            return Center(child: Text('Корзина пуста'));
           }
 
           final total = _calculateTotal(items);
@@ -74,7 +74,7 @@ class _CartScreenState extends State<CartScreen> {
             children: [
               Expanded(
                 child: ListView.builder(
-                  padding: const EdgeInsets.only(
+                  padding: .only(
                     bottom: 10, left: 25, right: 25, top: 5,
                   ),
                   itemCount: items.length,
@@ -89,14 +89,14 @@ class _CartScreenState extends State<CartScreen> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.all(20),
+                padding: .all(20),
                 child: AppButton(
                   text: 'Оформить заказ',
                   onTap: () {},
                   price: '$total',
                 ),
               ),
-              const SizedBox(height: 70),
+              SizedBox(height: 70),
             ],
           );
         },

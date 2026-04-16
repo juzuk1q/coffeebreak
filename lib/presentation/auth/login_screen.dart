@@ -122,7 +122,7 @@ class _LoginScreenState extends State<LoginScreen> {
             Row(
               mainAxisAlignment: .center,
               children: [
-                const Text('Нет аккаунта? '),
+                Text('Нет аккаунта? '),
                 GestureDetector(
                   onTap: () => Navigator.pushReplacement(
                     context,

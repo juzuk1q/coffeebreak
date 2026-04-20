@@ -2,7 +2,6 @@ import 'package:CoffeeBreak/core/constant/app_colors.dart';
 import 'package:CoffeeBreak/core/widgets/app_bar.dart';
 import 'package:CoffeeBreak/core/widgets/product_card.dart';
 import 'package:CoffeeBreak/data/product_service.dart';
-import 'package:CoffeeBreak/domain/models/product.dart';
 import 'package:CoffeeBreak/presentation/order/order_screen.dart';
 import 'package:flutter/material.dart';
 

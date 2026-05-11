@@ -6,6 +6,7 @@ import 'package:CoffeeBreak/presentation/auth/forgot_password_screen.dart';
 import 'package:CoffeeBreak/presentation/auth/register_screen.dart';
 import 'package:CoffeeBreak/presentation/main_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:vize/vize.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -56,7 +57,7 @@ class _LoginScreenState extends State<LoginScreen> {
       fillColor: AppColor.gray.withOpacity(0.45),
       border: OutlineInputBorder(
         borderSide: .none,
-        borderRadius: .circular(15),
+        borderRadius: .circular(15.r),
       ),
       hintText: hint,
       hintStyle: GoogleFonts.roboto(
@@ -69,25 +70,23 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final h = MediaQuery.of(context).size.height;
-
     return Scaffold(
       backgroundColor: AppColor.white,
       body: Padding(
-        padding: .all(28),
+        padding: pa(28),
         child: Column(
           crossAxisAlignment: .start,
           children: [
-            SizedBox(height: h * 0.1),
+            hs(10),
             Text('Ваш кофе\nскучал по вам', style: TxtStyle.reg30),
-            SizedBox(height: h * 0.03),
+            hs(3),
 
             TextField( // email
               controller: _emailController,
               keyboardType: TextInputType.emailAddress,
               decoration: _inputDecoration('user@email.com'),
             ),
-            SizedBox(height: 20),
+            fhs(20),
 
             TextField( // password
               controller: _pwrdController,
@@ -95,7 +94,7 @@ class _LoginScreenState extends State<LoginScreen> {
               obscuringCharacter: '*',
               decoration: _inputDecoration('Пароль'),
             ),
-            SizedBox(height: 10),
+            fhs(10),
 
             Align(
               alignment: .centerRight,
@@ -111,13 +110,13 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             ),
 
-            Spacer(),
+            fhs(325),
 
             AppButton(
               text: 'Войти',
               onTap: _isLoading ? () {} : _log,
             ),
-            SizedBox(height: 20),
+            fhs(20),
 
             Row(
               mainAxisAlignment: .center,
@@ -135,7 +134,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ],
             ),
-            SizedBox(height: h * 0.01),
+            hs(1)
           ],
         ),
       ),

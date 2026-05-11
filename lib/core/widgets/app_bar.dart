@@ -3,6 +3,7 @@ import 'package:CoffeeBreak/core/constant/app_colors.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter/material.dart';
+import 'package:vize/vize.dart';
 
 //  верхняя штучка (appbar)
 class AppHeader extends StatelessWidget implements PreferredSizeWidget {
@@ -20,7 +21,7 @@ class AppHeader extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      actionsPadding: .only(right: 25),
+      actionsPadding: po(r: 25),
       backgroundColor: AppColor.white,
       surfaceTintColor: Colors.transparent,
       elevation: 0,
@@ -31,7 +32,7 @@ class AppHeader extends StatelessWidget implements PreferredSizeWidget {
           ? GestureDetector(
         onTap: () => Navigator.pop(context),
         child: Padding(
-          padding: .only(left: 25, right: 5),
+          padding: po(l: 25, r: 5),
           child: SvgPicture.asset('assets/icons/back.svg'),
         ),
       )
@@ -64,12 +65,12 @@ class AppBottom extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: .only(left: 25, right: 25, bottom: 15),
+      padding: po(l: 25, r: 25, b: 23),
       child: Container(
-        height: 60,
+        height: 65.fh,
         decoration: BoxDecoration(
           color: AppColor.white,
-          borderRadius: .circular(20),
+          borderRadius: .circular(20.r),
           boxShadow: [
             BoxShadow(
               color: Colors.black.withOpacity(0.1),
@@ -79,7 +80,7 @@ class AppBottom extends StatelessWidget {
           ],
         ),
         child: Padding(
-          padding: .symmetric(horizontal: 30),
+          padding: ps(h: 30),
           child: Row(
             children: _items.indexed.map((e) {
               final (index, (icon, txt)) = e;
@@ -125,15 +126,15 @@ class _NavItem extends StatelessWidget {
           children: [
             SvgPicture.asset(
               icon,
-              height: 28,
-              width: 28,
+              height: 28.fh,
+              width: 28.fw,
               colorFilter: .mode(color, .srcIn),
             ),
-            SizedBox(height: 4),
+            SizedBox(height: 4.fh),
             Text(
               txt,
               style: GoogleFonts.roboto(
-                fontSize: 10,
+                fontSize: 10.ts,
                 fontWeight: .w500,
                 color: color,
               ),

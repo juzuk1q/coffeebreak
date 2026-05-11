@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:CoffeeBreak/core/constant/app_colors.dart';
 import 'package:CoffeeBreak/core/constant/text_styles.dart';
+import 'package:vize/vize.dart';
 
 // слайдер для выбора размера стаканчика кофе.
 class AppSlider extends StatefulWidget {
@@ -23,10 +24,10 @@ class _AppSliderState extends State<AppSlider> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 54,
+      height: 54.fh,
       decoration: BoxDecoration(
         color: AppColor.gray.withOpacity(0.3),
-        borderRadius: .circular(15),
+        borderRadius: .circular(15.r),
       ),
       child: LayoutBuilder(
         builder: (context, constraints) {

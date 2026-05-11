@@ -5,6 +5,7 @@ import 'package:CoffeeBreak/core/constant/app_colors.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
+import 'package:vize/vize.dart';
 
 // основная карточка товара, отображается на основном экране
 class ProductCard extends StatelessWidget {
@@ -26,19 +27,19 @@ class ProductCard extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        padding: .all(7),
-        height: 165,
-        width: 154,
+        padding: pa(7),
+        height: 165.fh,
+        width: 154.fw,
         decoration: BoxDecoration(
           color: AppColor.white,
-          borderRadius: .circular(15),
+          borderRadius: .circular(15.r),
         ),
         child: Column(
           crossAxisAlignment: .center,
           children: [
             Padding(
-              padding: .only(top: 15, left: 13, right: 13, bottom: 15),
-              child: Image.network(img, height: 95),
+              padding: po(t: 15, l: 13, r: 13, b: 15),
+              child: Image.network(img, height: 95.fh),
             ),
             Text(txt, style: TxtStyle.m14(color: AppColor.text)),
             Spacer(),
@@ -49,7 +50,7 @@ class ProductCard extends StatelessWidget {
                   cost,
                   style: GoogleFonts.poppins(
                     color: AppColor.text,
-                    fontSize: 14,
+                    fontSize: 14.ts,
                     fontWeight: .w500,
                   ),
                 ),

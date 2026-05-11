@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:CoffeeBreak/core/constant/app_colors.dart';
 import 'package:CoffeeBreak/core/constant/text_styles.dart';
+import 'package:vize/vize.dart';
 
 // основная зелёная кнопка
 class AppButton extends StatelessWidget {
@@ -22,23 +23,23 @@ class AppButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width: double.infinity,
-      height: 52,
+      height: 52.fh,
       child: ElevatedButton(
         onPressed: onTap,
         style: ElevatedButton.styleFrom(
           backgroundColor: AppColor.main,
           foregroundColor: AppColor.white,
           shape: RoundedRectangleBorder(
-            borderRadius: .circular(30),
+            borderRadius: .circular(30.r),
           ),
-          padding: .symmetric(horizontal: 25),
+          padding: ps(h: 25),
         ),
         child: Row(
           children: [
             if (icon != null)
               SvgPicture.asset(
                 icon!,
-                width: 25,
+                width: 25.fw,
                 colorFilter: .mode(AppColor.white, .srcIn),
               ),
             Expanded(
@@ -52,7 +53,7 @@ class AppButton extends StatelessWidget {
             if (price != null)
               Text('${price!}₽', style: TxtStyle.sb16),
             if (icon != null)
-              SizedBox(width: 25),
+              SizedBox(width: 25.fw),
           ],
         ),
       ),
@@ -79,7 +80,7 @@ class AppButton2 extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width: double.infinity,
-      height: 42,
+      height: 44.fh,
       child: ElevatedButton(
         onPressed: onTap,
         style: ElevatedButton.styleFrom(
@@ -89,7 +90,7 @@ class AppButton2 extends StatelessWidget {
           backgroundColor: backgroundColor,
           foregroundColor: AppColor.text,
           shape: RoundedRectangleBorder(
-            borderRadius: .circular(15),
+            borderRadius: .circular(10.r),
           ),
           padding: .symmetric(horizontal: spacing),
         ),
@@ -97,7 +98,7 @@ class AppButton2 extends StatelessWidget {
           children: [
             Text(txt, style: TxtStyle.m14(color: AppColor.text)),
             Spacer(),
-            SvgPicture.asset('assets/icons/arrowRight.svg', height: 18, width: 18),
+            SvgPicture.asset('assets/icons/arrowRight.svg', height: 17.fh, width: 17.fw),
           ],
         ),
       ),

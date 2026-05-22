@@ -103,13 +103,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
     return Scaffold(
       backgroundColor: AppColor.white,
       body: Padding(
-        padding: .all(28),
+        padding: pa(28),
         child: Form(
           key: _formKey,
           child: Column(
             crossAxisAlignment: .start,
             children: [
-              hs(1),
+              hs(10),
               Text('Ваш кофе\nначинается здесь', style: TxtStyle.reg30),
               hs(3),
 
@@ -162,8 +162,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 ),
                 validator: (v) => v != _pwrdController.text ? 'Пароли не совпадают' : null,
               ),
-
-              fhs(200),
+              fhs(70),
+              Spacer(),
 
               AppButton(
                 text: 'Зарегистрироваться',

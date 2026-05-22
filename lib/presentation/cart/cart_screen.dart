@@ -47,12 +47,10 @@ class _CartScreenState extends State<CartScreen> {
       setState(() => _items = updated);
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Товар удалён из корзины')),
+          SnackBar(content: Text('Товар удалён из корзины')),
         );
       }
-    } catch (e) {
-      debugPrint('Ошибка удаления: $e');
-    }
+    } finally {}
   }
 
   Future<void> _updateQuantity(int id, int count) async {
@@ -63,7 +61,7 @@ class _CartScreenState extends State<CartScreen> {
   @override
   Widget build(BuildContext context) {
     if (_isLoading) {
-      return const Scaffold(
+      return Scaffold(
         body: Center(child: CircularProgressIndicator()),
       );
     }
@@ -109,10 +107,9 @@ class _CartScreenState extends State<CartScreen> {
                     ),
                   );
                 } catch (e) {
-                  debugPrint('Ошибка оформления: $e');
                   if (mounted) {
                     ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
+                      SnackBar(
                           content:
                           Text('Ошибка при оформлении заказа')),
                     );

@@ -120,7 +120,7 @@ class AdditiveCard extends StatelessWidget {
 
 // карточка кофе, находится в корзине
 class ShoppingCard extends StatelessWidget {
-  final CartItem item; // todo: почему виджет зависит от модели?
+  final CartItem item;
   final Function(int) onQuantityChanged;
   final VoidCallback delete;
 
@@ -160,7 +160,7 @@ class ShoppingCard extends StatelessWidget {
                   width: 70,
                   height: 70,
                   fit: .cover,
-                  errorBuilder: (_, __, ___) =>
+                  errorBuilder: (x, y, z) =>
                       Container(width: 70, height: 70, color: Colors.grey[300]),
                 ),
               ),

@@ -18,7 +18,6 @@ class FavouritesScreen extends StatefulWidget {
 class _FavouritesScreenState extends State<FavouritesScreen> {
   final _service = FavouritesService();
   List<Product> _items = [];
-  bool _isLoading = true;
 
   @override
   void initState() {
@@ -31,7 +30,6 @@ class _FavouritesScreenState extends State<FavouritesScreen> {
     if (mounted)
       setState(() {
         _items = items;
-        _isLoading = false;
       });
   }
 
@@ -45,9 +43,7 @@ class _FavouritesScreenState extends State<FavouritesScreen> {
     return Scaffold(
       backgroundColor: AppColor.white,
       appBar: AppHeader(txt: 'Избранное', back: true),
-      body: _isLoading
-          ? Center(child: CircularProgressIndicator())
-          : _items.isEmpty
+      body: _items.isEmpty
           ? Center(
               child: Text(
                 'Нет избранных товаров',

@@ -32,11 +32,8 @@ class ProfileService {
     final user = _client.auth.currentUser;
     if (user == null) return null;
     final path = 'avatars/${user.id}.jpg';
-
-    print('user id: ${user.id}');
-    print('path: $path');
     try {
-      // конвертируем в JPEG независимо от исходного формата
+      // конвертация в JPEG независимо от исходного формата
       final bytes = await file.readAsBytes();
       final decoded = img.decodeImage(bytes);
       if (decoded == null) return null;
@@ -59,7 +56,6 @@ class ProfileService {
 
       return url;
     } catch (e) {
-      print('Ошибка загрузки аватара: $e');
       return null;
     }
   }

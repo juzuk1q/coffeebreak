@@ -48,7 +48,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     mainAxisSize: .min,
                     children: [
                       Text(
-                        'ул. Чкалова, д. 32',
+                        'ул. Пушкина, д. 10',
                         style: GoogleFonts.roboto(
                           fontSize: 14,
                           fontWeight: .w400,

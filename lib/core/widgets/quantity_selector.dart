@@ -3,10 +3,10 @@ import 'package:vize/vize.dart';
 import 'package:CoffeeBreak/core/constant/app_colors.dart';
 
 class QuantitySelector extends StatelessWidget {
-  final int count;
-  final Function(int) onChanged;
-  final int min;
-  final int max;
+  final int count;                  // количество
+  final Function(int) onChanged;    // + / -
+  final int min;                    // минимальное
+  final int max;                    // максимальное
 
   const QuantitySelector({
     super.key,
@@ -48,8 +48,8 @@ class QuantitySelector extends StatelessWidget {
 }
 
 class _QtyButton extends StatelessWidget {
-  final IconData icon;
-  final VoidCallback? onTap;
+  final IconData icon;        // + / -
+  final VoidCallback? onTap;  // действие какое
 
   const _QtyButton({required this.icon, required this.onTap});
 

@@ -6,16 +6,14 @@ import 'package:vize/vize.dart';
 
 // основная зелёная кнопка
 class AppButton extends StatelessWidget {
-  final String text;
-  final VoidCallback onTap;
-  final String? icon;
-  final String? price;
+  final String text;                // надпись кнопки
+  final VoidCallback onTap;         // действие куда переходит
+  final String? price;              // цена
 
   const AppButton({
     super.key,
     required this.text,
     required this.onTap,
-    this.icon,
     this.price,
   });
 
@@ -36,12 +34,6 @@ class AppButton extends StatelessWidget {
         ),
         child: Row(
           children: [
-            if (icon != null)
-              SvgPicture.asset(
-                icon!,
-                width: 25.fw,
-                colorFilter: .mode(AppColor.white, .srcIn),
-              ),
             Expanded(
               child: Text(
                 text,
@@ -52,8 +44,6 @@ class AppButton extends StatelessWidget {
             ),
             if (price != null)
               Text('${price!}₽', style: TxtStyle.sb16),
-            if (icon != null)
-              SizedBox(width: 25.fw),
           ],
         ),
       ),
@@ -63,10 +53,10 @@ class AppButton extends StatelessWidget {
 
 // кнопка на OrderScreen
 class AppButton2 extends StatelessWidget {
-  final String txt;
-  final VoidCallback onTap;
-  final Color backgroundColor;
-  final double spacing;
+  final String txt;                  // текст
+  final VoidCallback onTap;          // действие
+  final Color backgroundColor;       // цвет
+  final double spacing;              // отступ по бокам
 
   const AppButton2({
     super.key,

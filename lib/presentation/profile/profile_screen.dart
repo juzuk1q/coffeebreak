@@ -9,7 +9,6 @@ import 'package:vize/vize.dart';
 import 'package:CoffeeBreak/presentation/auth/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -23,8 +22,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   String? _name;
   String? _email;
   String? _avatarUrl;
-  bool _isLoading = true;
-  final supabase = Supabase.instance.client;
+
   final _authService = AuthService();
   final _profileService = ProfileService();
 
@@ -50,7 +48,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
         _name = data?['name'];
         _email = data?['email'];
         _avatarUrl = data?['avatar_url'];
-        _isLoading = false;
       });
     }
   }
@@ -69,8 +66,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
           b: MediaQuery.of(context).viewInsets.bottom + 24,
         ),
         child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: .min,
+          crossAxisAlignment: .start,
           children: [
             Text(label, style: TxtStyle.m18),
             SizedBox(height: 16),
@@ -81,7 +78,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 filled: true,
                 fillColor: AppColor.gray.withOpacity(0.3),
                 border: OutlineInputBorder(
-                  borderSide: BorderSide.none,
+                  borderSide: .none,
                   borderRadius: .circular(12.r),
                 ),
               ),
@@ -115,14 +112,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
       imageQuality: 80
     );
     if (picked == null) return;
-
-    setState(() => _isLoading = true);
     try {
       final url = await _profileService.uploadAvatar(File(picked.path));
       if (url != null) setState(() => _avatarUrl = '$url?t=${DateTime.now().millisecondsSinceEpoch}');
-    } finally {
-      if (mounted) setState(() => _isLoading = false);
-    }
+    } finally {}
   }
 
   @override
@@ -138,7 +131,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ),
         ],
       ),
-      // todo: доделать профиль, а то ты ленивый какой-то..
       body: Padding(
         padding: pa(20),
         child: Column(
@@ -174,7 +166,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
             ),
             fhs(24),
-
             // name and email
             Container(
               width: 322.w,
@@ -185,6 +176,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               padding: po(l: 16, r:16, t: 12, b: 2),
               child: Column(
                 children: [
+
                   // name
                   GestureDetector(
                     onTap: () {
@@ -193,7 +185,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         setState(() => _name = val);
                       });
                     },
-                    child: Container(
+                    child: SizedBox(
                       width: double.infinity,
                       child: Row(
                         children: [
@@ -228,7 +220,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       setState(() => _email = val);
                       });
                     },
-                    child: Container(
+                    child: SizedBox(
                       width: double.infinity,
                       child: Row(
                         children: [
@@ -272,12 +264,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
                 child: Row(
                   children: [
-                    Text('Избранное', style: TxtStyle.m14(color: AppColor.description)),
+                    Text('Избранное', style: TxtStyle.m14(color: AppColor.text)),
                     Spacer(),
-                    Icon(
-                      Icons.chevron_right,
-                      size: 20,
-                      color: AppColor.description,
+                    SvgPicture.asset(
+                      'assets/icons/arrowRight.svg',
+                      height: 18,
                     ),
                   ],
                 ),

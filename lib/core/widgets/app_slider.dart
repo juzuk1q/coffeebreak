@@ -5,8 +5,8 @@ import 'package:vize/vize.dart';
 
 // слайдер для выбора размера стаканчика кофе.
 class AppSlider extends StatefulWidget {
-  final List<String> size;
-  final Function(int) onTap;
+  final List<String> size;      // размер
+  final Function(int) onTap;    // действие при выборе
 
   const AppSlider({
     super.key,

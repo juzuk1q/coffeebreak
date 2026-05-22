@@ -56,16 +56,4 @@ class AuthService {
     await prefs.setString('access_token', session.accessToken);
     await prefs.setString('refresh_token', session.refreshToken ?? '');
   }
-
-  // проверка авторизации
-  Future<bool> isLoggedIn() async {
-    final prefs = await SharedPreferences.getInstance();
-    return prefs.getString('user_id') != null;
-  }
-
-  // получить email
-  Future<String?> getCurrentUserEmail() async {
-    final prefs = await SharedPreferences.getInstance();
-    return prefs.getString('user_email');
-  }
 }

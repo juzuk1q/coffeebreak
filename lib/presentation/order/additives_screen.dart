@@ -5,6 +5,7 @@ import 'package:CoffeeBreak/core/widgets/product_card.dart';
 import 'package:CoffeeBreak/data/additives_service.dart';
 import 'package:CoffeeBreak/domain/models/additive.dart';
 import 'package:flutter/material.dart';
+import 'package:vize/vize.dart';
 
 class AdditivesScreen extends StatefulWidget {
   final List<int> initialSelected;
@@ -60,7 +61,7 @@ class _AdditivesScreenState extends State<AdditivesScreen> {
         ),
       ),
       body: Padding(
-        padding: .all(20),
+        padding: pa(20),
         child: Column(
           crossAxisAlignment: .start,
           children: [
@@ -73,13 +74,10 @@ class _AdditivesScreenState extends State<AdditivesScreen> {
                   if (!snapshot.hasData) {
                     return Center(child: CircularProgressIndicator());
                   }
-
                   final items = snapshot.data!;
-
                   if (items.isEmpty) {
                     return Center(child: Text('Нет доступных добавок'));
                   }
-
                   return GridView.builder(
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2,

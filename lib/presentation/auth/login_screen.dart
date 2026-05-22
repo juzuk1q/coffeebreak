@@ -39,7 +39,7 @@ class _LoginScreenState extends State<LoginScreen> {
       if (!mounted) return;
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (_) => const MainScreen()),
+        MaterialPageRoute(builder: (_) => MainScreen()),
       );
     } catch (e) {
       if (!mounted) return;
@@ -109,8 +109,8 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
             ),
-
-            fhs(325),
+            fhs(200),
+            Spacer(),
 
             AppButton(
               text: 'Войти',

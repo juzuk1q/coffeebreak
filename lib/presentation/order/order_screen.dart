@@ -4,7 +4,6 @@ import 'package:CoffeeBreak/core/widgets/app_bar.dart';
 import 'package:CoffeeBreak/core/widgets/app_button.dart';
 import 'package:CoffeeBreak/core/widgets/app_slider.dart';
 import 'package:CoffeeBreak/core/widgets/quantity_selector.dart';
-import 'package:CoffeeBreak/data/order_service.dart';
 import 'package:CoffeeBreak/domain/models/product.dart';
 import 'package:CoffeeBreak/presentation/order/additives_screen.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +12,7 @@ import 'package:CoffeeBreak/domain/models/cart_item.dart';
 import 'package:CoffeeBreak/data/cart_service.dart';
 import 'package:CoffeeBreak/data/favourites_service.dart';
 
+// todo: переделать точно.
 class OrderScreen extends StatefulWidget {
   final Product product;
   final bool isEditing;
@@ -30,7 +30,7 @@ class OrderScreen extends StatefulWidget {
 }
 
 class _OrderScreenState extends State<OrderScreen> {
-  final _orderService = OrderService();
+
   final _favService = FavouritesService();
 
   List<int> _selectedAdditivesIds = [];

@@ -3,7 +3,7 @@ import 'package:CoffeeBreak/domain/models/cart_item.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class CartService {
-  static const _key = 'local_cart';
+  static const _key = 'localСart';
 
   // получить корзину
   Future<List<CartItem>> getCart() async {

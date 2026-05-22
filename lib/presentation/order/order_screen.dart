@@ -138,6 +138,7 @@ class _OrderScreenState extends State<OrderScreen> {
     }
 
     return Scaffold(
+      backgroundColor: AppColor.white,
       appBar: AppHeader(
         txt: 'Заказ',
         back: true,

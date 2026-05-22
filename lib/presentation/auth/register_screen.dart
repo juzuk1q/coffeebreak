@@ -5,6 +5,7 @@ import 'package:CoffeeBreak/data/auth_service.dart';
 import 'package:CoffeeBreak/presentation/auth/login_screen.dart';
 import 'package:CoffeeBreak/presentation/auth/otp_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:vize/vize.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -72,11 +73,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
       fillColor: AppColor.gray.withOpacity(0.45),
       border: OutlineInputBorder(
         borderSide: .none,
-        borderRadius: .circular(15),
+        borderRadius: .circular(15.r),
       ),
       hintText: hint,
       hintStyle: GoogleFonts.roboto(
-        fontSize: 16,
+        fontSize: 16.ts,
         fontWeight: FontWeight.w400,
         color: AppColor.description,
       ),
@@ -85,13 +86,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   Widget _eyeIcon(bool isSecure, VoidCallback onTap) {
     return Padding(
-      padding: .only(top: 15, right: 20, bottom: 15),
+      padding: po(t: 15, r: 20, b: 15),
       child: GestureDetector(
         onTap: onTap,
         child: SvgPicture.asset(
           isSecure ? 'assets/icons/visible.svg' : 'assets/icons/hidden.svg',
-          width: 30,
-          height: 20,
+          width: 30.fw,
+          height: 20.fh,
         ),
       ),
     );
@@ -99,8 +100,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final h = MediaQuery.of(context).size.height;
-
     return Scaffold(
       backgroundColor: AppColor.white,
       body: Padding(
@@ -110,9 +109,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
           child: Column(
             crossAxisAlignment: .start,
             children: [
-              SizedBox(height: h * 0.1),
+              hs(1),
               Text('Ваш кофе\nначинается здесь', style: TxtStyle.reg30),
-              SizedBox(height: h * 0.03),
+              hs(3),
 
               // Имя
               TextFormField(
@@ -120,7 +119,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 decoration: _inputDecoration('Имя'),
                 validator: (v) => (v == null || v.isEmpty) ? 'Введите ваше имя' : null,
               ),
-              SizedBox(height: 20),
+              fhs(20),
 
               // Email
               TextFormField(
@@ -133,7 +132,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   return null;
                 },
               ),
-              SizedBox(height: 20),
+              fhs(20),
 
               // Пароль
               TextFormField(
@@ -150,7 +149,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   return null;
                 },
               ),
-              SizedBox(height: 20),
+              fhs(20),
 
               // Подтверждение пароля
               TextFormField(
@@ -164,13 +163,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 validator: (v) => v != _pwrdController.text ? 'Пароли не совпадают' : null,
               ),
 
-              Spacer(),
+              fhs(200),
 
               AppButton(
                 text: 'Зарегистрироваться',
                 onTap: _isLoading ? () {} : _reg,
               ),
-              SizedBox(height: 20),
+              fhs(20),
+
               Row(
                 mainAxisAlignment: .center,
                 children: [
@@ -184,7 +184,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ),
                 ],
               ),
-              SizedBox(height: h * 0.01),
+              hs(1),
             ],
           ),
         ),

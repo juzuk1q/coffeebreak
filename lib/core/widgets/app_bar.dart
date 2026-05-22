@@ -65,7 +65,7 @@ class AppBottom extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: po(l: 25, r: 25, b: 23),
+      padding: po(l: 25, r: 25, b: 20),
       child: Container(
         height: 65.fh,
         decoration: BoxDecoration(
@@ -73,9 +73,14 @@ class AppBottom extends StatelessWidget {
           borderRadius: .circular(20.r),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.1),
+              color: Colors.black.withOpacity(0.2),
               blurRadius: 20,
               offset: Offset(0, 10),
+            ),
+            BoxShadow(
+              color: Colors.black.withOpacity(0.2),
+              blurRadius: 20,
+              offset: Offset(10, 0),
             ),
           ],
         ),

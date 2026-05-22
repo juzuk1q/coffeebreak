@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:vize/vize.dart';
 import 'package:CoffeeBreak/core/constant/app_colors.dart';
 
 class QuantitySelector extends StatelessWidget {
@@ -25,12 +26,12 @@ class QuantitySelector extends StatelessWidget {
           onTap: count > min ? () => onChanged(count - 1) : null,
         ),
         SizedBox(
-          width: 36,
+          width: 36.fw,
           child: Center(
             child: Text(
               '$count',
               style: TextStyle(
-                fontSize: 16,
+                fontSize: 16.ts,
                 fontWeight: FontWeight.w600,
                 color: AppColor.text,
               ),
@@ -59,13 +60,13 @@ class _QtyButton extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        width: 30,
-        height: 30,
+        width: 30.fw,
+        height: 30.fw,
         decoration: BoxDecoration(
           color: enabled
               ? AppColor.main.withOpacity(0.1)
               : Colors.grey.withOpacity(0.1),
-          borderRadius: .circular(8),
+          borderRadius: .circular(8.r),
         ),
         child: Icon(
           icon,

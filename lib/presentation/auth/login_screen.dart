@@ -27,21 +27,7 @@ class _LoginScreenState extends State<LoginScreen> {
   void dispose() {
     _emailController.dispose();
     _pwrdController.dispose();
-    login();
     super.dispose();
-  }
-
-  Future<void> login() async {
-    try {
-      final res = await Supabase.instance.client.auth.signInWithPassword(
-        email: 'xhash1kq@gmail.com',
-        password: '12312311',
-      );
-
-      print(res);
-    } catch (e) {
-      print(e);
-    }
   }
 
   Future<void> _log() async {

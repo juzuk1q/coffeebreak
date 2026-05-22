@@ -5,6 +5,7 @@ import 'package:CoffeeBreak/core/widgets/product_card.dart';
 import 'package:CoffeeBreak/data/cart_service.dart';
 import 'package:CoffeeBreak/domain/models/cart_item.dart';
 import 'package:flutter/material.dart';
+import 'package:vize/vize.dart';
 
 class CartScreen extends StatefulWidget {
   const CartScreen({super.key});
@@ -74,8 +75,8 @@ class _CartScreenState extends State<CartScreen> {
             children: [
               Expanded(
                 child: ListView.builder(
-                  padding: .only(
-                    bottom: 10, left: 25, right: 25, top: 5,
+                  padding: po(
+                    b: 10, l: 25, r: 25, t: 5,
                   ),
                   itemCount: items.length,
                   itemBuilder: (context, index) {
@@ -89,14 +90,14 @@ class _CartScreenState extends State<CartScreen> {
                 ),
               ),
               Padding(
-                padding: .all(20),
+                padding: pa(20),
                 child: AppButton(
                   text: 'Оформить заказ',
                   onTap: () {},
                   price: '$total',
                 ),
               ),
-              SizedBox(height: 70),
+              fhs(85),
             ],
           );
         },

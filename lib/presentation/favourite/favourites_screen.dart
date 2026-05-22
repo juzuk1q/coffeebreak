@@ -66,7 +66,7 @@ class _FavouritesScreenState extends State<FavouritesScreen> {
                   return ProductCard(
                     img: item.imagePath,
                     txt: item.name,
-                    cost: item.minPrice,
+                    cost: '',
                     onTap: () => Navigator.push(
                       context,
                       MaterialPageRoute(

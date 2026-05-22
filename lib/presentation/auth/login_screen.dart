@@ -7,6 +7,7 @@ import 'package:CoffeeBreak/presentation/auth/register_screen.dart';
 import 'package:CoffeeBreak/presentation/main_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:vize/vize.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -26,7 +27,21 @@ class _LoginScreenState extends State<LoginScreen> {
   void dispose() {
     _emailController.dispose();
     _pwrdController.dispose();
+    login();
     super.dispose();
+  }
+
+  Future<void> login() async {
+    try {
+      final res = await Supabase.instance.client.auth.signInWithPassword(
+        email: 'xhash1kq@gmail.com',
+        password: '12312311',
+      );
+
+      print(res);
+    } catch (e) {
+      print(e);
+    }
   }
 
   Future<void> _log() async {

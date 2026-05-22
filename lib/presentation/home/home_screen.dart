@@ -79,51 +79,52 @@ class _HomeScreenState extends State<HomeScreen> {
           fhs(20),
 
           // каталог кофе
-          Align(
-            alignment: .bottomCenter,
-            child: Container(
-              padding: pa(20),
-              height: h(100),
-              width: w(100),
-              decoration: BoxDecoration(
-                color: AppColor.navbar,
-                borderRadius: .only(
-                  topLeft: .circular(25.r),
-                  topRight: .circular(25.r),
+          Expanded(
+            child: Align(
+              alignment: .bottomCenter,
+              child: Container(
+                padding: pa(20),
+                width: w(100),
+                decoration: BoxDecoration(
+                  color: AppColor.navbar,
+                  borderRadius: .only(
+                    topLeft: .circular(25.r),
+                    topRight: .circular(25.r),
+                  ),
                 ),
-              ),
-              child: FutureBuilder(
-                future: _productsFuture,
-                builder: (context, snapshot) {
-                  if (!snapshot.hasData) {
-                    return Center(child: CircularProgressIndicator());
-                  }
-                  final products = snapshot.data!;
-                  return GridView.builder(
-                    padding: po(b: 240),
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      mainAxisSpacing: 16,
-                      crossAxisSpacing: 16,
-                      childAspectRatio: 0.85,
-                    ),
-                    itemCount: products.length,
-                    itemBuilder: (context, index) {
-                      final item = products[index];
-                      return ProductCard(
-                        img: item.imagePath,
-                        txt: item.name,
-                        cost: item.minPrice,
-                        onTap: () => Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (_) => OrderScreen(product: item),
+                child: FutureBuilder(
+                  future: _productsFuture,
+                  builder: (context, snapshot) {
+                    if (!snapshot.hasData) {
+                      return Center(child: CircularProgressIndicator());
+                    }
+                    final products = snapshot.data!;
+                    return GridView.builder(
+                      padding: po(b: 90),
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        mainAxisSpacing: 16,
+                        crossAxisSpacing: 16,
+                        childAspectRatio: 0.85,
+                      ),
+                      itemCount: products.length,
+                      itemBuilder: (context, index) {
+                        final item = products[index];
+                        return ProductCard(
+                          img: item.imagePath,
+                          txt: item.name,
+                          cost: item.minPrice,
+                          onTap: () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => OrderScreen(product: item),
+                            ),
                           ),
-                        ),
-                      );
-                    },
-                  );
-                },
+                        );
+                      },
+                    );
+                  },
+                ),
               ),
             ),
           ),

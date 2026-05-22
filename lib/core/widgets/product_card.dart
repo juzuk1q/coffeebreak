@@ -31,7 +31,7 @@ class ProductCard extends StatelessWidget {
         height: 165.fh,
         width: 154.fw,
         decoration: BoxDecoration(
-          color: AppColor.white,
+          color: AppColor.card,
           borderRadius: .circular(15.r),
         ),
         child: Column(

@@ -30,4 +30,13 @@ class CartItem {
 
   double get unitPrice => product.priceForSize(sizeName);
   int get totalPrice => (unitPrice * quantity).toInt();
+
+  Map<String, dynamic> toJson() => {
+    'id': id,
+    'quantity': quantity,
+    'size_name': sizeName,
+    'syrup': syrup,
+    'additives_ids': additivesIds,
+    'product': product.toJson(),
+  };
 }

@@ -4,6 +4,7 @@ import 'package:CoffeeBreak/core/constant/text_styles.dart';
 import 'package:CoffeeBreak/core/widgets/app_bar.dart';
 import 'package:CoffeeBreak/data/auth_service.dart';
 import 'package:CoffeeBreak/data/profile_service.dart';
+import 'package:CoffeeBreak/presentation/favourite/favourites_screen.dart';
 import 'package:vize/vize.dart';
 import 'package:CoffeeBreak/presentation/auth/login_screen.dart';
 import 'package:flutter/material.dart';
@@ -59,20 +60,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
     final result = await showModalBottomSheet<String>(
       context: context,
       isScrollControlled: true,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      shape: RoundedRectangleBorder(
+        borderRadius: .vertical(top: .circular(20.r)),
       ),
       builder: (context) => Padding(
-        padding: EdgeInsets.only(
-          left: 24, right: 24, top: 24,
-          bottom: MediaQuery.of(context).viewInsets.bottom + 24,
+        padding: po(
+          l: 24, r: 24, t: 24,
+          b: MediaQuery.of(context).viewInsets.bottom + 24,
         ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(label, style: TxtStyle.m18),
-            const SizedBox(height: 16),
+            SizedBox(height: 16),
             TextField(
               controller: controller,
               autofocus: true,
@@ -81,18 +82,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 fillColor: AppColor.gray.withOpacity(0.3),
                 border: OutlineInputBorder(
                   borderSide: BorderSide.none,
-                  borderRadius: BorderRadius.circular(12),
+                  borderRadius: .circular(12.r),
                 ),
               ),
             ),
-            const SizedBox(height: 16),
+            SizedBox(height: 16),
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
                 onPressed: () => Navigator.pop(context, controller.text),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColor.main,
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                  shape: RoundedRectangleBorder(borderRadius: .circular(12.r)),
                 ),
                 child: Text('Сохранить', style: TxtStyle.m16),
               ),
@@ -118,7 +119,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     setState(() => _isLoading = true);
     try {
       final url = await _profileService.uploadAvatar(File(picked.path));
-      if (url != null) setState(() => _avatarUrl = url);
+      if (url != null) setState(() => _avatarUrl = '$url?t=${DateTime.now().millisecondsSinceEpoch}');
     } finally {
       if (mounted) setState(() => _isLoading = false);
     }
@@ -151,10 +152,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     radius: 50,
                     backgroundColor: AppColor.gray.withOpacity(0.6),
                     backgroundImage: _avatarUrl != null
-                        ? NetworkImage(_avatarUrl!)
+                        ? NetworkImage(_avatarUrl!, headers: {'Cache-Control': 'no-cache'})
                         : null,
                     child: _avatarUrl == null
-                        ? const Icon(Icons.person, size: 55, color: AppColor.white)
+                        ? Icon(Icons.person, size: 55, color: AppColor.white)
                         : null,
                   ),
                   Positioned(
@@ -202,7 +203,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               children: [
                                 Text("Имя", style: TxtStyle.m14(color: AppColor.description)),
                                 if (_name != null) ...[
-                                  const SizedBox(height: 4),
+                                  SizedBox(height: 4),
                                   Text(_name!, style: TxtStyle.m14(color: AppColor.text)),
                                 ],
                               ],
@@ -218,6 +219,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
                   ),
                   Divider(indent: 16, endIndent: 16, color: AppColor.gray,),
+                  
                   // email
                   GestureDetector(
                     onTap: () {
@@ -236,7 +238,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               children: [
                                 Text("Почта", style: TxtStyle.m14(color: AppColor.description)),
                                 if (_email != null) ...[
-                                  const SizedBox(height: 4),
+                                  SizedBox(height: 4),
                                   Text(_email!, style: TxtStyle.m14(color: AppColor.text)),
                                 ],
                               ],
@@ -258,7 +260,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
             // кнопка избранное
             GestureDetector(
-              onTap: () {},
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => FavouritesScreen()));
+              },
               child: Container(
                 width: double.infinity,
                 padding: ps(h: 16, v: 12),
@@ -279,56 +283,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
               ),
             )
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class _ProfileField extends StatelessWidget {
-  final String label;
-  final String value;
-  final VoidCallback onTap;
-  final bool showArrow;
-
-  const _ProfileField({
-    required this.label,
-    required this.value,
-    required this.onTap,
-    this.showArrow = false,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        width: double.infinity,
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-        decoration: BoxDecoration(
-          color: AppColor.card,
-          borderRadius: BorderRadius.circular(12),
-        ),
-        child: Row(
-          children: [
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(label, style: TxtStyle.m14(color: AppColor.description)),
-                  if (value.isNotEmpty) ...[
-                    const SizedBox(height: 4),
-                    Text(value, style: TxtStyle.m14(color: AppColor.text)),
-                  ],
-                ],
-              ),
-            ),
-            Icon(
-              showArrow ? Icons.chevron_right : Icons.edit,
-              size: 18,
-              color: AppColor.description,
-            ),
           ],
         ),
       ),

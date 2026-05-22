@@ -38,6 +38,14 @@ class Product {
     final min = prices.map((p) => p.price).reduce((a, b) => a < b ? a : b);
     return 'от ${min.toInt()}₽';
   }
+
+  Map<String, dynamic> toJson() => {
+    'id': id,
+    'name': name,
+    'image_path': imagePath,
+    'description': description,
+    'product_prices': prices.map((p) => p.toJson()).toList(),
+  };
 }
 
 class ProductPrice {
@@ -48,6 +56,11 @@ class ProductPrice {
     required this.sizeName,
     required this.price,
   });
+
+  Map<String, dynamic> toJson() => {
+    'size_name': sizeName,
+    'price': price,
+  };
 
   factory ProductPrice.fromJson(Map<String, dynamic> json) {
     return ProductPrice(

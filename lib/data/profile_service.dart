@@ -22,25 +22,25 @@ class ProfileService {
     final user = _client.auth.currentUser;
     if (user == null) return;
 
-    await _client.from('users').upsert({
-      'id': user.id,
-      if ('name' == null) 'name': name,
-      if ('email' == null) 'email': email,
-    });
+    await _client.from('users').update({
+      if (name != null) 'name': name,
+      if (email != null) 'email': email,
+    }).eq('id', user.id);
   }
 
-  Future<String?> uploadAvatar(File file) async {
+  Future<String?> uploadAvatar(File file, {String name = ''}) async {
     final user = _client.auth.currentUser;
     if (user == null) return null;
+    final path = 'avatars/${user.id}.jpg';
 
+    print('user id: ${user.id}');
+    print('path: $path');
     try {
       // конвертируем в JPEG независимо от исходного формата
       final bytes = await file.readAsBytes();
       final decoded = img.decodeImage(bytes);
       if (decoded == null) return null;
       final compressed = img.encodeJpg(decoded, quality: 80);
-
-      final path = 'avatars/${user.id}.jpg';
 
       await _client.storage.from('avatars').uploadBinary(
         path,
@@ -52,10 +52,10 @@ class ProfileService {
       );
 
       final url = _client.storage.from('avatars').getPublicUrl(path);
-      await _client.from('users').upsert({
-        'id': user.id,
-        'avatar_url': url,
-      });
+
+      await _client.from('users')
+          .update({'avatar_url': url})
+          .eq('id', user.id);
 
       return url;
     } catch (e) {

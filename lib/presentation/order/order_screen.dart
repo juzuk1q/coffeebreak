@@ -9,7 +9,9 @@ import 'package:CoffeeBreak/domain/models/product.dart';
 import 'package:CoffeeBreak/presentation/order/additives_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:CoffeeBreak/domain/models/cart_item.dart';
+import 'package:CoffeeBreak/data/cart_service.dart';
+import 'package:CoffeeBreak/data/favourites_service.dart';
 
 class OrderScreen extends StatefulWidget {
   final Product product;
@@ -29,6 +31,7 @@ class OrderScreen extends StatefulWidget {
 
 class _OrderScreenState extends State<OrderScreen> {
   final _orderService = OrderService();
+  final _favService = FavouritesService();
 
   List<int> _selectedAdditivesIds = [];
   bool _isFav = false;
@@ -46,6 +49,11 @@ class _OrderScreenState extends State<OrderScreen> {
   @override
   void initState() {
     super.initState();
+
+    _favService.isFavourite(widget.product.id).then((val) {
+      if (mounted) setState(() => _isFav = val);
+    });
+
     if (widget.isEditing && widget.cartItem != null) {
       _selectedSyrup = widget.cartItem!['syrup']?.toString() ?? 'Без сиропа';
       _selectedAdditivesIds = List<int>.from(widget.cartItem!['additives_ids'] ?? []);
@@ -60,29 +68,17 @@ class _OrderScreenState extends State<OrderScreen> {
   Future<void> _saveOrder() async {
     if (_sizeNames.isEmpty) return;
 
-    try {
-      final user = Supabase.instance.client.auth.currentUser;
-      if (user == null) return;
+    final newItem = CartItem(
+      id: DateTime.now().millisecondsSinceEpoch,
+      quantity: _quantity,
+      sizeName: _sizeNames[_selectedIndex],
+      syrup: _selectedSyrup,
+      additivesIds: _selectedAdditivesIds,
+      product: widget.product,
+    );
 
-      final data = {
-        'product_id': widget.product.id,
-        'quantity': _quantity,
-        'size_name': _sizeNames[_selectedIndex],
-        'syrup': _selectedSyrup,
-        'additives_ids': _selectedAdditivesIds,
-        'user_id': user.id,
-      };
-
-      if (widget.isEditing && widget.cartItem != null) {
-        await _orderService.updateCartItem(widget.cartItem!['id'], data);
-      } else {
-        await _orderService.addToCart(data);
-      }
-
-      if (mounted) Navigator.pop(context);
-    } catch (e) {
-      debugPrint('Ошибка сохранения: $e');
-    }
+    await CartService().addItem(newItem);
+    if (mounted) Navigator.pop(context);
   }
 
   Future<void> _showSyrupPicker() async {
@@ -144,7 +140,10 @@ class _OrderScreenState extends State<OrderScreen> {
         back: true,
         actions: [
           GestureDetector(
-            onTap: () => setState(() => _isFav = !_isFav),
+            onTap: () async {
+              await _favService.toggle(widget.product);
+              if (mounted) setState(() => _isFav = !_isFav);
+            },
             child: SvgPicture.asset(
               _isFav ? 'assets/icons/heart.svg' : 'assets/icons/heartNO.svg',
             ),

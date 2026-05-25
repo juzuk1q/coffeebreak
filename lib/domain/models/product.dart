@@ -27,8 +27,10 @@ class Product {
 
   double priceForSize(String sizeName) {
     final match = prices.firstWhere(
-          (p) => p.sizeName == sizeName,
-      orElse: () => prices.isNotEmpty ? prices.first : ProductPrice(sizeName: 'S', price: 0),
+      (p) => p.sizeName == sizeName,
+      orElse: () => prices.isNotEmpty
+          ? prices.first
+          : ProductPrice(sizeName: 'S', price: 0),
     );
     return match.price;
   }
@@ -52,15 +54,9 @@ class ProductPrice {
   final String sizeName;
   final double price;
 
-  const ProductPrice({
-    required this.sizeName,
-    required this.price,
-  });
+  const ProductPrice({required this.sizeName, required this.price});
 
-  Map<String, dynamic> toJson() => {
-    'size_name': sizeName,
-    'price': price,
-  };
+  Map<String, dynamic> toJson() => {'size_name': sizeName, 'price': price};
 
   factory ProductPrice.fromJson(Map<String, dynamic> json) {
     return ProductPrice(

@@ -4,22 +4,22 @@ import 'package:shared_preferences/shared_preferences.dart';
 class AuthService {
   final SupabaseClient _client = Supabase.instance.client;
 
+  // вход
+  Future<AuthResponse> logIn(String email, String password) async {
+    final response = await _client.auth.signInWithPassword(
+      email: email,
+      password: password,
+    );
+    await _saveSession();
+    return response;
+  }
+
   // регистрация
   Future<AuthResponse> reg(String email, String password, String name) async {
     final response = await _client.auth.signUp(
       email: email,
       password: password,
       data: {'name': name},
-    );
-    await _saveSession();
-    return response;
-  }
-
-  // вход
-  Future<AuthResponse> logIn(String email, String password) async {
-    final response = await _client.auth.signInWithPassword(
-      email: email,
-      password: password,
     );
     await _saveSession();
     return response;

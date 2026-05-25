@@ -5,6 +5,14 @@ import 'package:shared_preferences/shared_preferences.dart';
 class CartService {
   static const _key = 'localСart';
 
+
+  // сохранить корзину
+  Future<void> _saveCart(List<CartItem> items) async {
+    final prefs = await SharedPreferences.getInstance();
+    final raw = jsonEncode(items.map((e) => e.toJson()).toList());
+    await prefs.setString(_key, raw);
+  }
+
   // получить корзину
   Future<List<CartItem>> getCart() async {
     final prefs = await SharedPreferences.getInstance();
@@ -13,13 +21,6 @@ class CartService {
 
     final List decoded = jsonDecode(raw);
     return decoded.map((e) => CartItem.fromJson(e)).toList();
-  }
-
-  // сохранить корзину
-  Future<void> _saveCart(List<CartItem> items) async {
-    final prefs = await SharedPreferences.getInstance();
-    final raw = jsonEncode(items.map((e) => e.toJson()).toList());
-    await prefs.setString(_key, raw);
   }
 
   // добавить товар (с проверкой дубликата)

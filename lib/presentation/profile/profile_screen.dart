@@ -215,10 +215,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   // email
                   GestureDetector(
                     onTap: () {
-                      _editField('Почта', _email, (val) async {
-                      await _profileService.updateProfile(email: val);
-                      setState(() => _email = val);
-                      });
+                      
                     },
                     child: SizedBox(
                       width: double.infinity,
@@ -235,11 +232,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 ],
                               ],
                             ),
-                          ),
-                          Icon(
-                            Icons.edit,
-                            size: 18,
-                            color: AppColor.description,
                           ),
                         ],
                       ),

@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:vize/vize.dart';
 
 class AdditivesScreen extends StatefulWidget {
-  final List<int> initialSelected;
+  final List<Additive> initialSelected;
 
   const AdditivesScreen({super.key, required this.initialSelected});
 
@@ -18,7 +18,7 @@ class AdditivesScreen extends StatefulWidget {
 
 class _AdditivesScreenState extends State<AdditivesScreen> {
   final _additivesService = AdditivesService();
-  late List<int> _selected;
+  late List<Additive> _selected;
   late Future<List<Additive>> _additivesFuture;
 
   @override
@@ -28,12 +28,14 @@ class _AdditivesScreenState extends State<AdditivesScreen> {
     _additivesFuture = _additivesService.getAdditives();
   }
 
-  void _toggle(int id) {
+  void _toggle(Additive additive) {
     setState(() {
-      if (_selected.contains(id)) {
-        _selected.remove(id);
+      final exists = _selected.any((e) => e.id == additive.id);
+
+      if (exists) {
+        _selected.removeWhere((e) => e.id == additive.id);
       } else if (_selected.length < 3) {
-        _selected.add(id);
+        _selected.add(additive);
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
@@ -92,8 +94,8 @@ class _AdditivesScreenState extends State<AdditivesScreen> {
                         img: item.imagePath,
                         txt: item.name,
                         cost: item.priceLabel,
-                        isSelected: _selected.contains(item.id),
-                        onTap: () => _toggle(item.id),
+                        isSelected: _selected.any((e) => e.id == item.id),
+                        onTap: () => _toggle(item),
                       );
                     },
                   );

@@ -172,7 +172,7 @@ class ShoppingCard extends StatelessWidget {
                   children: [
                     Text(item.product.name, style: TxtStyle.m14(color: AppColor.text)),
                     Text(
-                      '${item.syrup}, ${item.sizeName}',
+                      '${item.sizeLabel}, ${item.syrup}, ${item.additives.isNotEmpty ? "${item.additives.map((e) => e.name).join(', ')}" : ''}',
                       style: TextStyle(fontSize: 10, color: Colors.grey),
                       maxLines: 1,
                       overflow: .ellipsis,

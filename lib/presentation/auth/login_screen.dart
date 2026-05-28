@@ -7,7 +7,6 @@ import 'package:CoffeeBreak/presentation/auth/register_screen.dart';
 import 'package:CoffeeBreak/presentation/main_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:vize/vize.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class LoginScreen extends StatefulWidget {

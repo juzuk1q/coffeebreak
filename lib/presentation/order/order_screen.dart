@@ -5,6 +5,7 @@ import 'package:CoffeeBreak/core/widgets/app_button.dart';
 import 'package:CoffeeBreak/core/widgets/app_slider.dart';
 import 'package:CoffeeBreak/core/widgets/quantity_selector.dart';
 import 'package:CoffeeBreak/domain/models/product.dart';
+import 'package:CoffeeBreak/domain/models/additive.dart';
 import 'package:CoffeeBreak/presentation/order/additives_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -33,7 +34,7 @@ class _OrderScreenState extends State<OrderScreen> {
 
   final _favService = FavouritesService();
 
-  List<int> _selectedAdditivesIds = [];
+  List<Additive> _selectedAdditives = [];
   bool _isFav = false;
   int _quantity = 1;
   String _selectedSyrup = 'Без сиропа';
@@ -44,7 +45,14 @@ class _OrderScreenState extends State<OrderScreen> {
   // берём прямо из модели — никакого запроса к БД
   List<String> get _sizeNames => widget.product.prices.map((p) => p.sizeName).toList();
   double get _currentPrice => widget.product.prices[_selectedIndex].price;
-  int get _totalPrice => (_currentPrice * _quantity).toInt();
+  int get _totalPrice {
+    final additivesPrice = _selectedAdditives.fold<int>(
+      0,
+          (sum, e) => sum + e.price.toInt(),
+    );
+
+    return ((_currentPrice + additivesPrice) * _quantity).toInt();
+  }
 
   @override
   void initState() {
@@ -56,7 +64,7 @@ class _OrderScreenState extends State<OrderScreen> {
 
     if (widget.isEditing && widget.cartItem != null) {
       _selectedSyrup = widget.cartItem!['syrup']?.toString() ?? 'Без сиропа';
-      _selectedAdditivesIds = List<int>.from(widget.cartItem!['additives_ids'] ?? []);
+      _selectedAdditives = (widget.cartItem!['additives'] as List<dynamic>? ?? []).map((e) => Additive.fromJson(e)).toList();
       _quantity = widget.cartItem!['quantity'] ?? 1;
 
       final savedSize = widget.cartItem!['size_name']?.toString();
@@ -73,7 +81,7 @@ class _OrderScreenState extends State<OrderScreen> {
       quantity: _quantity,
       sizeName: _sizeNames[_selectedIndex],
       syrup: _selectedSyrup,
-      additivesIds: _selectedAdditivesIds,
+      additives: _selectedAdditives,
       product: widget.product,
     );
 
@@ -185,15 +193,15 @@ class _OrderScreenState extends State<OrderScreen> {
             AppButton2(
               txt: 'Добавки',
               onTap: () async {
-                final result = await Navigator.push<List<int>>(
+                final result = await Navigator.push<List<Additive>>(
                   context,
                   MaterialPageRoute(
                     builder: (_) => AdditivesScreen(
-                      initialSelected: _selectedAdditivesIds,
+                      initialSelected: _selectedAdditives,
                     ),
                   ),
                 );
-                if (result != null) setState(() => _selectedAdditivesIds = result);
+                if (result != null) setState(() => _selectedAdditives = result);
               },
             ),
             Divider(),

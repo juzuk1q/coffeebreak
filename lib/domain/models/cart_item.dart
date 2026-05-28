@@ -1,11 +1,12 @@
 import 'package:CoffeeBreak/domain/models/product.dart';
+import 'additive.dart';
 
 class CartItem {
   final int id;
   final int quantity;
   final String sizeName;
   final String syrup;
-  final List<int> additivesIds;
+  final List<Additive> additives;
   final Product product;
 
   const CartItem({
@@ -13,7 +14,7 @@ class CartItem {
     required this.quantity,
     required this.sizeName,
     required this.syrup,
-    required this.additivesIds,
+    required this.additives,
     required this.product,
   });
 
@@ -23,12 +24,21 @@ class CartItem {
       quantity: json['quantity'] ?? 1,
       sizeName: json['size_name'] ?? '',
       syrup: json['syrup'] ?? 'Без сиропа',
-      additivesIds: List<int>.from(json['additives_ids'] ?? []),
+      additives: (json['additives'] as List<dynamic>? ?? [])
+          .map((e) => Additive.fromJson(e))
+          .toList(),
       product: Product.fromJson(json['product'] ?? {}),
     );
   }
 
-  double get unitPrice => product.priceForSize(sizeName);
+  double get unitPrice {
+    final additivesPrice = additives.fold(
+      0.0,
+          (sum, additive) => sum + additive.price,
+    );
+
+    return product.priceForSize(sizeName) + additivesPrice;
+  }
   int get totalPrice => (unitPrice * quantity).toInt();
 
   Map<String, dynamic> toJson() => {
@@ -36,7 +46,25 @@ class CartItem {
     'quantity': quantity,
     'size_name': sizeName,
     'syrup': syrup,
-    'additives_ids': additivesIds,
+    'additives': additives.map((e) => {
+      'id': e.id,
+      'name': e.name,
+      'image_path': e.imagePath,
+      'price': e.price,
+    }).toList(),
     'product': product.toJson(),
   };
+
+  String? get sizeLabel {
+    switch (sizeName.toUpperCase()) {
+      case 'S':
+        return 'Маленький';
+      case 'M':
+        return 'Средний';
+      case 'L':
+        return 'Большой';
+      case 'XL':
+        return 'Очень большой';
+    }
+  }
 }

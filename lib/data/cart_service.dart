@@ -30,7 +30,12 @@ class CartService {
     final index = items.indexWhere((e) =>
     e.product.id == newItem.product.id &&
         e.sizeName == newItem.sizeName &&
-        e.syrup == newItem.syrup);
+        e.syrup == newItem.syrup &&
+        jsonEncode(
+          e.additives.map((a) => a.id).toList()..sort(),
+        ) == jsonEncode(
+          newItem.additives.map((a) => a.id).toList()..sort(),
+        ));
 
     if (index != -1) {
       final existing = items[index];
@@ -39,7 +44,7 @@ class CartService {
         quantity: existing.quantity + newItem.quantity,
         sizeName: existing.sizeName,
         syrup: existing.syrup,
-        additivesIds: existing.additivesIds,
+        additives: existing.additives,
         product: existing.product,
       );
     } else {
@@ -61,7 +66,7 @@ class CartService {
         quantity: count,
         sizeName: item.sizeName,
         syrup: item.syrup,
-        additivesIds: item.additivesIds,
+        additives: item.additives,
         product: item.product,
       );
     }

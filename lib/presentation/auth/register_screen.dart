@@ -6,6 +6,7 @@ import 'package:CoffeeBreak/presentation/auth/login_screen.dart';
 import 'package:CoffeeBreak/presentation/auth/otp_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:vize/vize.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -51,19 +52,56 @@ class _RegisterScreenState extends State<RegisterScreen> {
       );
 
       if (!mounted) return;
+
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (_) => OTPScreen(email: _emailController.text.trim()),
+          builder: (_) => OTPScreen(
+            email: _emailController.text.trim(),
+          ),
+        ),
+      );
+    } on AuthException catch (e) {
+      if (!mounted) return;
+
+      String message = 'Произошла ошибка';
+
+      switch (e.code) {
+        case 'user_already_exists':
+          message = 'Пользователь уже зарегистрирован';
+          break;
+
+        case 'invalid_email':
+          message = 'Некорректный email';
+          break;
+
+        case 'weak_password':
+          message = 'Слишком слабый пароль';
+          break;
+
+        default:
+          message = e.message;
+      }
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(message),
+          behavior: SnackBarBehavior.floating,
         ),
       );
     } catch (e) {
       if (!mounted) return;
+
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Ошибка: $e')),
+        const SnackBar(
+          content: Text('Не удалось выполнить регистрацию'),
+          behavior: SnackBarBehavior.floating,
+        ),
       );
     } finally {
-      if (mounted) setState(() => _isLoading = false);
+      if (mounted) {
+        setState(() => _isLoading = false);
+      }
     }
   }
 

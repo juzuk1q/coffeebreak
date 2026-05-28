@@ -6,6 +6,7 @@ import 'package:CoffeeBreak/presentation/auth/forgot_password_screen.dart';
 import 'package:CoffeeBreak/presentation/auth/register_screen.dart';
 import 'package:CoffeeBreak/presentation/main_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:vize/vize.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -31,23 +32,62 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Future<void> _log() async {
     setState(() => _isLoading = true);
+
     try {
       await _authService.logIn(
         _emailController.text.trim(),
         _pwrdController.text,
       );
+
       if (!mounted) return;
+
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (_) => MainScreen()),
+        MaterialPageRoute(
+          builder: (_) => MainScreen(),
+        ),
+      );
+    } on AuthException catch (e) {
+      if (!mounted) return;
+
+      String message = 'Ошибка авторизации';
+
+      switch (e.code) {
+        case 'invalid_credentials':
+          message = 'Неверный email или пароль';
+          break;
+
+        case 'email_not_confirmed':
+          message = 'Подтвердите email';
+          break;
+
+        case 'invalid_email':
+          message = 'Некорректный email';
+          break;
+
+        default:
+          message = e.message;
+      }
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(message),
+          behavior: SnackBarBehavior.floating,
+        ),
       );
     } catch (e) {
       if (!mounted) return;
+
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Ошибка: $e')),
+        const SnackBar(
+          content: Text('Не удалось выполнить вход'),
+          behavior: SnackBarBehavior.floating,
+        ),
       );
     } finally {
-      if (mounted) setState(() => _isLoading = false);
+      if (mounted) {
+        setState(() => _isLoading = false);
+      }
     }
   }
 

@@ -19,58 +19,59 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  String? _name;
-  String? _email;
-  String? _avatarUrl;
+  String? _name;          // null if not set or empty name
+  String? _email;         // null if not set or empty email
+  String? _avatarUrl;     // null if not set or empty avatar
 
-  final _authService = AuthService();
-  final _profileService = ProfileService();
+  final _authService = AuthService();         // auth service
+  final _profileService = ProfileService();   // profile service
 
   @override
   void initState() {
     super.initState();
     _loadProfile();
-  }
+  }                                     // load profile data
 
   Future<void> _signOut() async {
-    await _authService.signOut();
-    if (!mounted) return;
+    await _authService.signOut();       // sign out
+    if (!mounted) return;               // if not mounted return
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(builder: (_) => LoginScreen()),
-    );
-  }
+    );                                  // redirect to login screen
+  }                                     // sign out func
 
   Future<void> _loadProfile() async {
-    final data = await _profileService.getProfile();
+    final data = await _profileService.getProfile();    // get profile data
     if (mounted) {
       setState(() {
-        _name = data?['name'];
-        _email = data?['email'];
-        _avatarUrl = data?['avatar_url'];
-      });
-    }
+        _name = data?['name'];              // set profile data name
+        _email = data?['email'];            // set profile data email
+        _avatarUrl = data?['avatar_url'];   // set profile data avatar
+      });                                   // set profile datas
+    }                                   // if mounted set profile datas
   }
 
+  // edit field
   Future<void> _editField(String label, String? current, Function(String) onSave) async {
-    final controller = TextEditingController(text: current ?? '');
-    final result = await showModalBottomSheet<String>(
+    final controller = TextEditingController(text: current ?? '');    // controller for text field
+    final result = await showModalBottomSheet<String>(                // show modal bottom sheet
       context: context,
-      isScrollControlled: true,
+      isScrollControlled: true,         // allow scrolling
       shape: RoundedRectangleBorder(
         borderRadius: .vertical(top: .circular(20.r)),
-      ),
+      ),                                // rounded corners
       builder: (context) => Padding(
         padding: po(
           l: 24, r: 24, t: 24,
           b: MediaQuery.of(context).viewInsets.bottom + 24,
-        ),
+        ),                              // padding for bottom sheet
         child: Column(
           mainAxisSize: .min,
           crossAxisAlignment: .start,
           children: [
-            Text(label, style: TxtStyle.m18),
-            SizedBox(height: 16),
+            Text(label, style: TxtStyle.m18),     // text field label
+            SizedBox(height: 16),                 // space between text and textbox
             TextField(
               controller: controller,
               autofocus: true,
@@ -83,16 +84,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
               ),
             ),
-            SizedBox(height: 16),
+            SizedBox(height: 16),       // space between textbox and button
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
-                onPressed: () => Navigator.pop(context, controller.text),
+                onPressed: () => Navigator.pop(context, controller.text),  // close modal bottom sheet
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColor.main,
-                  shape: RoundedRectangleBorder(borderRadius: .circular(12.r)),
+                  shape: RoundedRectangleBorder(borderRadius: .circular(12.r)), // rounded corners
                 ),
-                child: Text('Сохранить', style: TxtStyle.m16),
+                child: Text('Сохранить', style: TxtStyle.m16),  // button text
               ),
             ),
           ],

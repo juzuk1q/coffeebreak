@@ -13,29 +13,29 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-  int _currentIndex = 0;
+  int _currentIndex = 0;             // 0 - home, 1 - profile, 2 - cart
 
   final List<Widget> _pages = [
     HomeScreen(),
     ProfileScreen(),
     CartScreen(),
-  ];
+  ];                                 // pages
 
   void _onItemTapped(int index) {
     setState(() {
       _currentIndex = index;
     });
-  }
+  }                                  // on tap func
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColor.white,
-      extendBody: true,
-      body: _pages[_currentIndex],
-      bottomNavigationBar: AppBottom(
-        currentIndex: _currentIndex,
-        onTap: _onItemTapped,
+      backgroundColor: AppColor.white,    // bg: white
+      extendBody: true,                   // extend bottom bar
+      body: _pages[_currentIndex],        // current page
+      bottomNavigationBar: AppBottom(     // bottom bar
+        currentIndex: _currentIndex,      // current index
+        onTap: _onItemTapped,             // on tap func
       ),
     );
   }

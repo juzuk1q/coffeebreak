@@ -6,15 +6,15 @@ import 'package:vize/vize.dart';
 
 Future<void> main() async {
   final binding = WidgetsFlutterBinding.ensureInitialized();
-  binding.deferFirstFrame();
+  binding.deferFirstFrame();                                   // w8ing for flutter to init
 
   await Supabase.initialize(
-    url: SupabaseCFG.url,
-    anonKey: SupabaseCFG.anonKey,
-    authOptions: FlutterAuthClientOptions(),
+    url: SupabaseCFG.url,                                      // supabase cfg
+    anonKey: SupabaseCFG.anonKey,                              // supabase cfg
+    authOptions: FlutterAuthClientOptions(),                   // supabase cfg
   );
-  binding.allowFirstFrame();
-  runApp(MyApp());
+  binding.allowFirstFrame();                                   // allow flutter to init
+  runApp(MyApp());                                             // run app
 }
 
 class MyApp extends StatelessWidget {
@@ -25,8 +25,8 @@ class MyApp extends StatelessWidget {
     Vize.init(context, figmaHeight: 812, figmaWidth: 375);    // init vize
     return MaterialApp(
       debugShowCheckedModeBanner: false,                      // hide debug
-      title: 'Coffee Break',
-      home: AuthGate(),
+      title: 'Coffee Break',                                  // idk where ts use
+      home: AuthGate(),                                       // 1st screen
     );
   }
 }
